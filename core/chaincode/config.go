@@ -124,8 +124,8 @@ func IsDevMode() bool {
 
 func getCcOverrideName() string {
 	CcNameSpaceOverride := "default"
-	if viper.IsSet("chaincode.ccname.override") {
-		CcNameSpaceOverride = viper.GetString("chaincode.ccname.override")
+	if viper.IsSet("chaincode.ccname.namespace") {
+		CcNameSpaceOverride = viper.GetString("chaincode.ccname.namespace")
 	}
 	return CcNameSpaceOverride
 }
