@@ -31,6 +31,9 @@ type Config struct {
 	LogLevel        string
 	ShimLogLevel    string
 	SCCAllowlist    map[string]bool
+
+	// CcNameSpaceOverride is for overriding the namespace for chaincode
+	CcNameSpaceOverride string
 }
 
 func GlobalConfig() *Config {
@@ -70,6 +73,11 @@ func (c *Config) load() {
 	c.TotalQueryLimit = 10000 // need a default just in case it's not set
 	if viper.IsSet("ledger.state.totalQueryLimit") {
 		c.TotalQueryLimit = viper.GetInt("ledger.state.totalQueryLimit")
+	}
+
+	c.CcNameSpaceOverride = "default"
+	if viper.IsSet("chaincode.ccname.override") {
+		c.CcNameSpaceOverride = viper.GetString("chaincode.ccname.override")
 	}
 }
 
@@ -112,4 +120,12 @@ func IsDevMode() bool {
 	mode := viper.GetString("chaincode.mode")
 
 	return mode == DevModeUserRunsChaincode
+}
+
+func getCcOverrideName() string {
+	CcNameSpaceOverride := "default"
+	if viper.IsSet("chaincode.ccname.override") {
+		CcNameSpaceOverride = viper.GetString("chaincode.ccname.override")
+	}
+	return CcNameSpaceOverride
 }

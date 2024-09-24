@@ -148,6 +148,5 @@ func (c *Config) loadConfig(endpoint string, certs *common.TLSCertificates, boot
 	c.ReconnectInterval = util.GetDurationOrDefault("peer.gossip.reconnectInterval", c.AliveExpirationTimeout)
 	c.MaxConnectionAttempts = util.GetIntOrDefault("peer.gossip.maxConnectionAttempts", discovery.DefMaxConnectionAttempts)
 	c.MsgExpirationFactor = util.GetIntOrDefault("peer.gossip.msgExpirationFactor", discovery.DefMsgExpirationFactor)
-
 	return nil
 }

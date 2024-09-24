@@ -1160,6 +1160,14 @@ func (h *Handler) Execute(txParams *ccprovider.TransactionParams, namespace stri
 	txParams.IsInitTransaction = (msg.Type == pb.ChaincodeMessage_INIT)
 	txParams.NamespaceID = namespace
 
+	chaincodeLogger.Debugf("Transaction namespace %s", txParams.NamespaceID)
+
+	CcNameOverride := getCcOverrideName()
+	if CcNameOverride != "default" {
+		txParams.NamespaceID = CcNameOverride
+		chaincodeLogger.Debugf("Overriding Transaction namespace %s", txParams.NamespaceID)
+	}
+
 	txctx, err := h.TXContexts.Create(txParams)
 	if err != nil {
 		return nil, err
